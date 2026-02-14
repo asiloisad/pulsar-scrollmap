@@ -15,21 +15,25 @@ Show markers on the scroll bar. Core package providing scrollmap infrastructure 
 
 To install `scrollmap` search for [scrollmap](https://web.pulsar-edit.dev/packages/scrollmap) in the Install pane of the Pulsar settings or run `ppm install scrollmap`. Alternatively, you can run `ppm install asiloisad/pulsar-scrollmap` to install a package directly from the GitHub repository.
 
-## Service
+## Provided Service `scrollmap`
 
-The package provides a `scrollmap` service for other packages to add custom layers.
+Allows other packages to add custom marker layers to the scrollbar. Each layer provider returns a descriptor with initialization and item-fetching callbacks.
 
-### Providing a Layer
+In your `package.json`:
 
-```javascript
-// In package.json:
-"providedServices": {
-  "scrollmap": {
-    "versions": { "1.0.0": "provideScrollmap" }
+```json
+{
+  "providedServices": {
+    "scrollmap": {
+      "versions": { "1.0.0": "provideScrollmap" }
+    }
   }
 }
+```
 
-// In your main module:
+In your main module:
+
+```javascript
 provideScrollmap() {
   return {
     name: "mylayer",
@@ -68,19 +72,25 @@ provideScrollmap() {
 | `row` | number | Screen row for the marker |
 | `cls` | string | Additional CSS class (optional) |
 
-### Simplemap for Non-Editor Panes
+## Provided Service `simplemap`
 
-For custom panes (like PDF viewer), consume the `simplemap` service:
+Provides a scrollbar widget for non-editor panes (like PDF viewer). Consumers receive a `Simplemap` constructor to create standalone scrollbar markers.
 
-```javascript
-// In package.json:
-"consumedServices": {
-  "simplemap": {
-    "versions": { "1.0.0": "consumeSimplemap" }
+In your `package.json`:
+
+```json
+{
+  "consumedServices": {
+    "simplemap": {
+      "versions": { "1.0.0": "consumeSimplemap" }
+    }
   }
 }
+```
 
-// In your main module:
+In your main module:
+
+```javascript
 consumeSimplemap(Simplemap) {
   const simplemap = new Simplemap();
   simplemap.setItems([

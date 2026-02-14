@@ -1,6 +1,6 @@
 {
   "name": "scrollmap",
-  "description": "Show markers on the scroll bar of text-editor",
+  "description": "Show markers on the scroll bar",
   "repository": "https://github.com/asiloisad/pulsar-scrollmap",
   "keywords": [
     "scrollmap"
