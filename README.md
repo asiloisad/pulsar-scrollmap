@@ -7,6 +7,8 @@ Show markers on the scroll bar. Core package providing scrollmap infrastructure 
 ## Features
 
 - **Layer system**: Multiple packages can add markers to the scrollbar.
+- **3-column layout**: Markers positioned in left, center, or right columns.
+- **Cross-platform**: Automatically adapts to scrollbar width on Windows, macOS, and Linux.
 - **Toggle panel**: Enable/disable layers individually.
 - **Simplemap API**: Support for non-editor panes like PDF viewer.
 - **Extensible**: Other packages provide layers via the `scrollmap` service.
@@ -103,6 +105,15 @@ consumeSimplemap(Simplemap) {
 ```
 
 ## Customization
+
+The scrollbar width is measured automatically and stored as CSS variables on `:root`:
+
+| Variable | Description |
+| --- | --- |
+| `--scrollbar-width` | Measured scrollbar width (e.g. 10px on Windows, 8px on Linux) |
+| `--scrollbar-bottom` | Bottom offset for horizontal scrollbar (0px for overlay scrollbars) |
+
+Marker widths use percentages (40% center, 20% sides) to scale proportionally across platforms.
 
 The style can be adjusted according to user preferences in the `styles.less` file:
 

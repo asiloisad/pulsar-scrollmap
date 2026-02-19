@@ -1,9 +1,3 @@
-// default values
-@scrollbar-width: 10px;
-@scrollmap-marker-edge: 0px;
-@scrollmap-marker-width: 4px;
-@scrollmap-marker-wside: 2px;
-
 @import "ui-variables";
 
 .scrollmap-view .tag {
@@ -20,30 +14,30 @@
   top: 0;
   left: auto !important;
   right: 0;
-  bottom: @scrollbar-width;
-  width: @scrollbar-width;
+  bottom: var(--scrollbar-bottom);
+  width: var(--scrollbar-width);
   z-index: 9;
   pointer-events: none;
 
   .marker {
     position: absolute;
-    left: @scrollmap-marker-edge;
-    right: @scrollmap-marker-edge;
+    left: 0;
+    right: 0;
     margin: 0 auto;
-    width: @scrollmap-marker-width;
+    width: 40%;
     pointer-events: auto;
     min-height: 1px;
     height: var(--scrollmap-marker-height);
     cursor: default;
     &.left {
       right: auto;
-      left: @scrollmap-marker-edge;
-      width: @scrollmap-marker-wside;
+      left: 0;
+      width: 20%;
     }
     &.right {
       left: auto;
-      right: @scrollmap-marker-edge;
-      width: @scrollmap-marker-wside;
+      right: 0;
+      width: 20%;
     }
   }
 }
