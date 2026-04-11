@@ -41,12 +41,12 @@ provideScrollmap() {
     name: "mylayer",
     description: "My layer description",
     position: "left",
-    initialize: ({ editor, disposables, update }) => {
+    initialize: ({ editor, cache, disposables, update }) => {
       disposables.add(
         editor.onDidStopChanging(update),
       );
     },
-    getItems: ({ editor }) => {
+    getItems: ({ editor, cache }) => {
       return [
         { row: 10 },                  // basic marker
         { row: 20, cls: "special" },  // with extra class
@@ -64,8 +64,24 @@ provideScrollmap() {
 | `description` | string | Layer description shown in toggle panel (optional) |
 | `position` | string | Position class e.g. `left`, `right` (optional) |
 | `timer` | number | Throttle interval in ms (default: 20) |
-| `initialize` | function | `({ editor, cache, disposables, update }) => void` - set up layer |
-| `getItems` | function | `({ editor, cache }) => items[]` - return markers to render |
+| `initialize` | function | `(layer) => void` - set up layer |
+| `getItems` | function | `(layer) => items[]` - return markers to render |
+
+### Layer instance
+
+Both `initialize` and `getItems` receive the layer instance. It can also be accessed externally via `editor.scrollmap.layers.get(name)` to push data from service consumers.
+
+| Member | Type | Description |
+| --- | --- | --- |
+| `editor` | TextEditor | The editor this layer belongs to |
+| `props` | object | The provider descriptor passed to `provideScrollmap` |
+| `cache` | Map | Persistent store to bridge external service data into `getItems`. Set data from service callbacks with `cache.set("data", ...)`, read it in `getItems` with `cache.get("data")`. See [scrollmap-navigation](https://github.com/asiloisad/pulsar-scrollmap-navigation), [scrollmap-linter](https://github.com/asiloisad/pulsar-scrollmap-linter), [scrollmap-highlight](https://github.com/asiloisad/pulsar-scrollmap-highlight) for examples |
+| `items` | array | Current marker items populated from `getItems` return value. Read-only for consumers |
+| `disposables` | CompositeDisposable | Add subscriptions and cleanup callbacks here. Auto-disposed on layer destroy |
+| `update()` | function | Throttled. Re-runs `getItems`, recalculates pixel positions, and re-renders |
+| `refresh()` | function | Throttled. Recalculates pixel positions and re-renders without calling `getItems`. Used internally on fold and decoration changes |
+
+`update` has higher priority than `refresh`. If `update` is pending, `refresh` calls are skipped. If `refresh` is pending, an `update` call replaces it.
 
 ### Marker item properties
 
