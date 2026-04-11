@@ -63,7 +63,7 @@ provideScrollmap() {
 | `name` | string | Layer name (CSS class: `marker-{name}`) |
 | `description` | string | Layer description shown in toggle panel (optional) |
 | `position` | string | Position class e.g. `left`, `right` (optional) |
-| `timer` | number | Throttle interval in ms (default: 50) |
+| `timer` | number | Throttle interval in ms (default: 20) |
 | `initialize` | function | `({ editor, cache, disposables, update }) => void` - set up layer |
 | `getItems` | function | `({ editor, cache }) => items[]` - return markers to render |
 
