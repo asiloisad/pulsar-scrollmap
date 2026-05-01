@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "etch": "^0.14.1",
-    "@asiloisad/select-list": "^1.5.0"
+    "@asiloisad/select-list": "^1.6.0"
   },
   "configSchema": {
     "disabledLayers": {
