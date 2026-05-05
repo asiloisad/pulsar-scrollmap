@@ -48,8 +48,9 @@ provideScrollmap() {
     },
     getItems: ({ editor, cache }) => {
       return [
-        { row: 10 },                  // basic marker
-        { row: 20, cls: "special" },  // with extra class
+        { row: 10 },
+        { row: 20, cls: "special" },
+        { row: 30, end: 35, cls: "special" },
       ];
     },
   };
@@ -88,6 +89,7 @@ Both `initialize` and `getItems` receive the layer instance. It can also be acce
 | Property | Type | Description |
 | --- | --- | --- |
 | `row` | number | Screen row for the marker |
+| `end` | number | Last screen row of the range (optional). Marker height spans `row` to `end` |
 | `cls` | string | Additional CSS class (optional) |
 
 ## Provided Service `simplemap`
@@ -112,8 +114,8 @@ In your main module:
 consumeSimplemap(Simplemap) {
   const simplemap = new Simplemap();
   simplemap.setItems([
-    { percent: 10, cls: "marker-h1" },
-    { percent: 50, cls: "marker-h2" },
+    { prc: 10, cls: "marker-h1" },
+    { prc: 50, end: 60, cls: "marker-h2" },
   ]);
   container.appendChild(simplemap.element);
   return new Disposable(() => simplemap.destroy());
@@ -129,7 +131,7 @@ The scrollbar width is measured automatically and stored as CSS variables on `:r
 | `--scrollbar-width` | Measured scrollbar width (e.g. 10px on Windows, 8px on Linux) |
 | `--scrollbar-bottom` | Bottom offset for horizontal scrollbar (0px for overlay scrollbars) |
 
-Marker widths use percentages (40% center, 20% sides) to scale proportionally across platforms.
+Marker widths use prcages (40% center, 20% sides) to scale proportionally across platforms.
 
 The style can be adjusted according to user preferences in the `styles.less` file:
 
